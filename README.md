@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-One‑shot deployment of a secure, highly available, multi‑region Azure environment using **Bicep** and a **single orchestration file**. The infrastructure meets real‑world constraints (vCPU quotas, missing feature flags) while implementing zero‑trust security, Private Link, Azure Firewall, and resilient storage.
+Deploying a secure, highly available, multi‑region Azure environment using **Bicep** and a **single orchestration file**. The infrastructure meets real‑world constraints (vCPU quotas, missing feature flags) while implementing zero‑trust security, Private Link, Azure Firewall, and resilient storage.
 
 ---
 
@@ -42,7 +42,7 @@ One‑shot deployment of a secure, highly available, multi‑region Azure enviro
 
 ```
 .
-├── deploy.sh                     # One‑shot deployment script (generates password, calls Azure CLI)
+├── deploy.sh                     # A deployment script (generates password, calls Azure CLI)
 ├── main.bicep                    # Orchestration entry point – calls all modules
 └── modules/
     ├── task0-monitor.bicep
