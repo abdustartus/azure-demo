@@ -1,0 +1,15 @@
+# Deployment generated
+.admin_password
+.deployment_status.json
+
+# Bicep compilation leftovers
+*.json
+*.lock
+
+# SSH keys (if accidentally placed)
+*.pem
+*.key
+
+# System files
+.DS_Store
+Thumbs.db
