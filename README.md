@@ -93,7 +93,7 @@ All Bicep files are fully commented and follow Azure best practices.
 
 3. **Run the deployment** (replace with your actual public IP)
    ```bash
-   ./deploy.sh 203.0.113.45
+   ./deploy.sh <public-ip>
    ```
 
    The script will:
@@ -101,8 +101,6 @@ All Bicep files are fully commented and follow Azure best practices.
    - Create the resource group `Azure-RG` (if missing)
    - Deploy all 15 modules using `main.bicep` (ARM handles dependency ordering)
    - Output the load balancer public IP and other important values
-
-   **Time estimate:** ~25 minutes (firewall provisioning takes the longest).
 
 ---
 
@@ -140,7 +138,7 @@ xfreerdp /v:$LB_IP:53389 /u:azureadmin /p:"$PASS" +clipboard /dynamic-resolution
 ```bash
 ssh -i ~/.ssh/azure_project_key azureadmin@$RDGW_IP
 # Inside the gateway:
-ssh azureadmin@10.20.1.4
+ssh azureadmin@<WS11-pvt-ip>
 df -h /mnt/sdrive
 ls -l /S:
 ```
@@ -159,12 +157,12 @@ Expected: `HTTP/2 200`
 
 ### 7. Access manifest (storage URLs, keys, SAS tokens)
 ```bash
-az deployment group show -g Azure-RG -n task4a-storage --query properties.outputs
-az deployment group show -g Azure-RG -n task4b-storage --query properties.outputs
-az deployment group show -g Azure-RG -n task4c-rbac --query properties.outputs
+az deployment group show -g Azure-RG -n task4a-storage-japaneast --query properties.outputs
+az deployment group show -g Azure-RG -n task4a-storage-japanwest --query properties.outputs
+az deployment group show -g Azure-RG -n task4c-rbac-grs --query properties.outputs
 ```
 
-> **Note:** The deployment names are exactly `task4a-storage`, `task4b-storage`, and `task4c-rbac` as defined in `main.bicep`. Do not add a `.bicep` extension.
+> **Note:** The deployment names are exactly `task4a-storage-japaneast`, `task4a-storage-japanwest`, and `task4c-rbac-grs` as defined in `main.bicep`. Do not add a `.bicep` extension.
 
 ---
 
@@ -201,8 +199,6 @@ rm -f .admin_password
 | **xrdp login failed** – special characters in password, missing `.xsession` | Used `printf | passwd` and explicitly set `xfce4-session` with `chown` |
 | **`ParentResourceNotFound` for runCommand** (WS11 not yet created) | Added explicit `dependsOn: [ task2d ]` to the storage mount module in `main.bicep` |
 
-All fixes are **hardcoded in the Bicep templates** – no manual CLI intervention required for a successful deployment.
-
 ---
 
 ## License
@@ -210,16 +206,3 @@ All fixes are **hardcoded in the Bicep templates** – no manual CLI interventio
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
 ---
-
-**Author:** Cloud Architect  
-**Date:** May 2026  
-**Deployment status:** ✅ One‑shot, production‑ready, and fully automated.
-```
-
-Replace the existing `README.md` with the content above, commit, and push:
-
-```bash
-git add README.md
-git commit -m "Correct README validation commands (deployment names without .bicep)"
-git push
-```
